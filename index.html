@@ -1,0 +1,745 @@
+  <!DOCTYPE html>
+  <html lang="ro">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <title>Iasmina | Bio-Digital Odyssey</title>
+      <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+      <style>
+          :root {
+              --primary: #00ffcc;
+              --secondary: #ff0077;
+              --accent: #00aaff;
+              --bg: #02050a;
+              --text: #ffffff;
+              --glass: rgba(255, 255, 255, 0.08);
+              --glow: 0 0 20px var(--primary);
+          }
+
+          body {
+              margin: 0;
+              padding: 0;
+              background-color: var(--bg);
+              color: var(--text);
+              font-family: 'Poppins', sans-serif;
+              overflow-x: hidden;
+              scroll-behavior: smooth;
+              -webkit-tap-highlight-color: transparent;
+          }
+
+          .stars {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              z-index: -1;
+              background: radial-gradient(circle at center, #0a1a2a 0%, var(--bg) 100%);
+          }
+
+          .star {
+              position: absolute;
+              background: white;
+              border-radius: 50%;
+              opacity: 0.5;
+              animation: twinkle var(--duration) infinite;
+          }
+
+          @keyframes twinkle {
+              0%, 100% { opacity: 0.3; transform: scale(1); }
+              50% { opacity: 1; transform: scale(1.2); }
+          }
+
+          .sync-bar-container {
+              position: fixed;
+              top: 20px;
+              left: 50%;
+              transform: translateX(-50%);
+              z-index: 1000;
+              width: clamp(150px, 80vw, 250px);
+              text-align: center;
+          }
+
+          .sync-text {
+              font-family: 'Orbitron', sans-serif;
+              font-size: 0.6rem;
+              margin-bottom: 5px;
+              color: var(--primary);
+              letter-spacing: 2px;
+              text-transform: uppercase;
+          }
+
+          .sync-progress {
+              width: 100%;
+              height: 6px;
+              background: rgba(255,255,255,0.1);
+              border-radius: 10px;
+              overflow: hidden;
+              border: 1px solid var(--primary);
+              box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+          }
+
+          .sync-fill {
+              width: 0%;
+              height: 100%;
+              background: linear-gradient(to right, var(--primary), var(--accent));
+              box-shadow: var(--glow);
+              transition: width 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          }
+
+          section {
+              min-height: 100vh;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              padding: 60px 20px;
+              text-align: center;
+              position: relative;
+              box-sizing: border-box;
+          }
+
+          h1 {
+              font-family: 'Orbitron', sans-serif;
+              font-size: clamp(2.5rem, 12vw, 6rem);
+              margin: 0;
+              background: linear-gradient(to right, var(--primary), var(--secondary));
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              filter: drop-shadow(0 0 15px var(--primary));
+              line-height: 1.1;
+          }
+
+          .romantic-text {
+              font-family: 'Dancing Script', cursive;
+              font-size: clamp(1.5rem, 5vw, 2rem);
+              color: var(--secondary);
+              margin-bottom: 20px;
+              text-shadow: 0 0 10px rgba(255, 0, 119, 0.5);
+          }
+
+          .glass-box {
+              background: var(--glass);
+              backdrop-filter: blur(20px);
+              -webkit-backdrop-filter: blur(20px);
+              border: 1px solid rgba(255, 255, 255, 0.1);
+              padding: clamp(20px, 5vw, 50px);
+              border-radius: 40px;
+              width: 95%;
+              max-width: 800px;
+              box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+              box-sizing: border-box;
+              transition: transform 0.3s ease;
+          }
+
+          .module-title {
+              font-family: 'Orbitron', sans-serif;
+              color: var(--primary);
+              margin-bottom: 25px;
+              font-size: clamp(1.2rem, 4vw, 2.2rem);
+              letter-spacing: 2px;
+          }
+
+          .dashboard {
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+              gap: 15px;
+              margin-top: 30px;
+          }
+
+          .stat-card {
+              background: rgba(0,0,0,0.4);
+              padding: 20px;
+              border-radius: 25px;
+              border: 1px solid var(--primary);
+              transition: 0.3s;
+          }
+
+          .stat-value {
+              display: block;
+              font-family: 'Orbitron', sans-serif;
+              font-size: 1.4rem;
+              color: var(--primary);
+              margin-top: 10px;
+          }
+
+          /* GALERIE OPTIMIZATĂ PENTRU TOATE ECRA able */
+          .gallery-grid {
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: center;
+              gap: 15px;
+              margin-top: 30px;
+          }
+
+          .memory-slide {
+              position: relative;
+              cursor: pointer;
+              border-radius: 20px;
+              overflow: hidden;
+              border: 3px solid var(--primary);
+              transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+              width: clamp(130px, 40vw, 160px);
+              height: clamp(130px, 40vw, 160px);
+              box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+          }
+
+          .memory-slide img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              transition: 0.5s;
+          }
+
+          .memory-slide:hover {
+              transform: scale(1.05) rotate(2deg);
+              border-color: var(--secondary);
+              box-shadow: 0 0 30px var(--secondary);
+          }
+
+          #photoModal {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background: rgba(0,0,0,0.95);
+              z-index: 2000;
+              display: none;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+              padding: 20px;
+              box-sizing: border-box;
+          }
+
+          #modalImg {
+              max-width: 90%;
+              max-height: 70vh;
+              border: 5px solid var(--primary);
+              border-radius: 20px;
+              box-shadow: 0 0 40px var(--primary);
+          }
+
+          #modalText {
+              color: white;
+              font-family: 'Dancing Script', cursive;
+              font-size: clamp(1.4rem, 5vw, 2rem);
+              margin-top: 20px;
+              text-align: center;
+              text-shadow: 0 0 10px var(--primary);
+          }
+
+          .dna-grid {
+              display: flex;
+              gap: 12px;
+              justify-content: center;
+              margin: 25px 0;
+              flex-wrap: wrap;
+          }
+
+          .nucleotide {
+              width: 55px;
+              height: 55px;
+              border: 2px solid var(--primary);
+              border-radius: 15px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              cursor: pointer;
+              font-family: 'Orbitron', sans-serif;
+              font-weight: bold;
+              transition: 0.3s;
+              font-size: 1.2rem;
+              user-select: none;
+              background: rgba(0,0,0,0.3);
+          }
+
+          .nucleotide.active {
+              background: var(--secondary);
+              border-color: var(--secondary);
+              color: white;
+              box-shadow: 0 0 20px var(--secondary);
+          }
+
+          .spectro-grid {
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+              gap: 15px;
+              margin: 25px 0;
+          }
+
+          .spectro-btn {
+              background: rgba(0, 170, 255, 0.1);
+              border: 1px solid var(--accent);
+              color: var(--accent);
+              padding: 15px;
+              border-radius: 20px;
+              cursor: pointer;
+              font-family: 'Orbitron', sans-serif;
+              transition: 0.3s;
+              font-size: 0.85rem;
+          }
+
+          .spectro-btn:hover {
+              background: var(--accent);
+              color: var(--bg);
+              box-shadow: 0 0 20px var(--accent);
+          }
+
+          #spectro-result {
+              font-style: italic;
+              min-height: 60px;
+              color: var(--accent);
+              margin-top: 20px;
+              font-size: 1rem;
+          }
+
+          .microscope-container {
+              position: relative;
+              width: clamp(200px, 70vw, 300px);
+              height: clamp(200px, 70vw, 300px);
+              margin: 0 auto;
+              border: 12px solid #222;
+              border-radius: 50%;
+              overflow: hidden;
+              cursor: pointer;
+              background: #000;
+              box-shadow: 0 0 40px var(--accent);
+              touch-action: none;
+          }
+
+          .lens-view {
+              position: absolute;
+              width: 100%;
+              height: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              font-size: clamp(3rem, 10vw, 5rem);
+              transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+              pointer-events: none;
+          }
+
+          /* SINTEZA PROTEINEI OPTIMIZATA */
+          .protein-lab {
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+              gap: 12px;
+              justify-content: center;
+              margin: 25px 0;
+          }
+
+          .ingredient {
+              padding: 15px;
+              border: 1px solid var(--accent);
+              border-radius: 25px;
+              cursor: pointer;
+              transition: 0.3s;
+              font-size: 0.9rem;
+              user-select: none;
+              text-align: center;
+              background: rgba(0, 170, 255, 0.05);
+          }
+
+          .ingredient.selected {
+              background: var(--accent);
+              color: white;
+              box-shadow: 0 0 20px var(--accent);
+              transform: scale(1.05);
+          }
+
+          .archive-card {
+              background: rgba(0,0,0,0.5);
+              padding: 20px;
+              border-radius: 20px;
+              margin-bottom: 20px;
+              text-align: left;
+              border-left: 5px solid var(--primary);
+              transition: 0.3s;
+          }
+
+          .btn-final {
+              background: linear-gradient(45deg, var(--primary), var(--secondary));
+              color: white;
+              border: none;
+              padding: 20px 40px;
+              font-family: 'Orbitron', sans-serif;
+              font-weight: bold;
+              font-size: clamp(1rem, 4vw, 1.4rem);
+              border-radius: 50px;
+              cursor: pointer;
+              transition: 0.4s;
+              box-shadow: 0 0 30px var(--primary);
+              margin-top: 30px;
+              text-transform: uppercase;
+              letter-spacing: 2px;
+          }
+
+          #finalScreen {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background: var(--bg);
+              z-index: 3000;
+              display: none;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+              color: var(--text);
+              text-align: center;
+              padding: 20px;
+              box-sizing: border-box;
+              overflow: hidden;
+          }
+
+          .final-content {
+              z-index: 3001;
+              animation: zoomIn 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          }
+
+          .final-content h2 {
+              font-family: 'Orbitron', sans-serif;
+              font-size: clamp(2rem, 8vw, 4rem);
+              margin: 0;
+              background: linear-gradient(to right, var(--primary), var(--secondary));
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              filter: drop-shadow(0 0 20px var(--primary));
+          }
+
+          .final-content p {
+              font-family: 'Dancing Script', cursive;
+              font-size: clamp(1.5rem, 5vw, 2.5rem);
+              margin: 20px 0;
+              color: #fff;
+          }
+
+          .heart-big {
+              font-size: clamp(5rem, 20vw, 10rem);
+              animation: beat 0.6s infinite alternate;
+              filter: drop-shadow(0 0 30px var(--secondary));
+          }
+
+          .confetti {
+              position: absolute;
+              font-size: 2rem;
+              z-index: 3000;
+              pointer-events: none;
+              animation: fall linear forwards;
+          }
+
+          @keyframes fall { to { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
+          @keyframes beat { to { transform: scale(1.2); } }
+          @keyframes zoomIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+          footer {
+              text-align: center;
+              padding: 60px 20px;
+              font-size: 0.8rem;
+              opacity: 0.6;
+              letter-spacing: 1px;
+          }
+      </style>
+  </head>
+  <body id="body">
+
+      <div class="stars" id="starField"></div>
+
+      <div class="sync-bar-container">
+          <div class="sync-text">Sincronizare Bio-Digitală</div>
+          <div class="sync-progress">
+              <div class="sync-fill" id="syncFill"></div>
+          </div>
+      </div>
+
+      <section id="s1">
+          <div class="dna-icon" style="font-size: 6rem; animation: float 3s infinite ease-in-out; display: block; margin-bottom: 20px;">🧬</div>
+          <h1>IASMINA</h1>
+          <p class="romantic-text">Bun venit în cel mai complex ecosistem de iubire.</p>
+          <p style="opacity: 0.6; font-size: 1rem; letter-spacing: 1px;">(Explorează în jos pentru a analiza datele)</p>
+      </section>
+
+      <section id="s2">
+          <div class="glass-box">
+              <h2 class="module-title">Centrul de Comandă</h2>
+              <p>Sincronizarea în timp real a sistemului Silviu-Iasmina:</p>
+              <div class="dashboard">
+                  <div class="stat-card">
+                      <span>Compatibilitate</span>
+                      <span class="stat-value">100%</span>
+                  </div>
+                  <div class="stat-card">
+                      <span>Sincronizare</span>
+                      <span class="stat-value" id="stat-sync">0%</span>
+                  </div>
+                  <div class="stat-card">
+                      <span>Nivel Iubire</span>
+                      <span class="stat-value">Infinit</span>
+                  </div>
+                  <div class="stat-card">
+                      <span>Stabilitate</span>
+                      <span class="stat-value">Absolută</span>
+                  </div>
+              </div>
+          </div>
+      </section>
+
+      <section id="s-memories">
+          <div class="glass-box">
+              <h2 class="module-title">Bio-Memories: Arhiva Vizuală</h2>
+              <p>Sincronizarea vizuală: Apasă pe lameli pentru a accesa amintirile.</p>
+              <div class="gallery-grid">
+                  <div class="memory-slide" onclick="openPhoto('https://i.imgur.com/uhMgJ6C.jpeg', 'Zâmbetul care îmi luminează întreaga lume ❤️')">
+                      <img src="https://i.imgur.com/uhMgJ6C.jpeg" alt="Memory 1">
+                  </div>
+                  <div class="memory-slide" onclick="openPhoto('https://i.imgur.com/2DpRY12.jpeg', 'Fiecare secundă cu tine este o amintire prețioasă ✨')">
+                      <img src="https://i.imgur.com/2DpRY12.jpeg" alt="Memory 2">
+                  </div>
+                  <div class="memory-slide" onclick="openPhoto('https://i.imgur.com/gTHyFY9.jpeg', 'Ești cea mai frumoasă bioingineră din univers! 🧬')">
+                      <img src="https://i.imgur.com/gTHyFY9.jpeg" alt="Memory 3">
+                  </div>
+                  <div class="memory-slide" onclick="openPhoto('https://i.imgur.com/o2uN1Gw.jpeg', 'Iubirea noastră este cea mai stabilă constantă a universului ❤️')">
+                      <img src="https://i.imgur.com/o2uN1Gw.jpeg" alt="Memory 4">
+                  </div>
+              </div>
+          </div>
+      </section>
+
+      <section id="s3">
+          <div class="glass-box">
+              <h2 class="module-title">Secvențierea Iubirii</h2>
+              <p>Apasă nucleotidele în ordinea corectă:</p>
+              <div class="dna-grid">
+                  <div class="nucleotide" onclick="checkDNA(this, 'A')">A</div>
+                  <div class="nucleotide" onclick="checkDNA(this, 'T')">T</div>
+                  <div class="nucleotide" onclick="checkDNA(this, 'C')">C</div>
+                  <div class="nucleotide" onclick="checkDNA(this, 'G')">G</div>
+              </div>
+              <div id="dna-message">Sistemul așteaptă secvența...</div>
+          </div>
+      </section>
+
+      <section id="s4">
+          <div class="glass-box">
+              <h2 class="module-title">Analiza Spectroscopică</h2>
+              <p>Selectează o frecvență pentru a scana calitățile tale:</p>
+              <div class="spectro-grid">
+                  <button class="spectro-btn" onclick="scanSpectro(1)">Frecvența Bunătății</button>
+                  <button class="spectro-btn" onclick="scanSpectro(2)">Frecvența Inteligenței</button>
+                  <button class="spectro-btn" onclick="scanSpectro(3)">Frecvența Frumuseții</button>
+                  <button class="spectro-btn" onclick="scanSpectro(4)">Frecvența Iubirii</button>
+              </div>
+              <div id="spectro-result">Aștept selectarea frecvenței...</div>
+          </div>
+      </section>
+
+      <section id="s5">
+          <div class="glass-box">
+              <h2 class="module-title">Microscopul Digital</h2>
+              <p>Apasă pe lentilă pentru a schimba proba observată.</p>
+              <div class="microscope-container" id="microscope">
+                  <div class="lens-view" id="lens">✨</div>
+              </div>
+              <p id="micro-desc" style="margin-top: 20px; font-style: italic; min-height: 40px; font-size: 1.1rem;"></p>
+          </div>
+      </section>
+
+      <section id="s6">
+          <div class="glass-box">
+              <h2 class="module-title">Sinteza Proteinei</h2>
+              <p>Combină ingredientele pentru a crea Formula Iasmina.</p>
+              <div class="protein-lab">
+                  <div class="ingredient" onclick="toggleIngredient(this)">🧠 Inteligență</div>
+                  <div class="ingredient" onclick="toggleIngredient(this)">🌸 Bunătate</div>
+                  <div class="ingredient" onclick="toggleIngredient(this)">✨ Frumusețe</div>
+                  <div class="ingredient" onclick="toggleIngredient(this)">❤️ Iubire</div>
+                  <div class="ingredient" onclick="toggleIngredient(this)">🌈 Magie</div>
+              </div>
+              <p id="lab-status" style="margin-top: 20px; font-weight: bold;"></p>
+          </div>
+      </section>
+
+      <section id="s7">
+          <div class="glass-box">
+              <h2 class="module-title">Arhivele Digitale</h2>
+              <p>Fișiere extrase din memoria sistemului:</p>
+              <div class="archive-card">
+                  <strong>Fișier #01: Primele Impresii</strong>
+                  <p>În momentul în care te-am văzut, am simțit că sistemul meu s-a restartat complet. Ai adus o lumină pe care niciun laborator nu o poate replica.</p>
+              </div>
+              <div class="archive-card">
+                  <strong>Fișier #02: Analiza Zâmbetului</strong>
+                  <p>Zâmbetul tău are capacitatea de a neutraliza orice stres și de a crea o stare de fericire absolută în jurul tău.</p>
+              </div>
+              <div class="archive-card">
+                  <strong>Fișier #03: Promisiunea</strong>
+                  <p>Indiferent de cât de mult evoluează tehnologia sau biologia, sentimentul meu pentru tine rămâne singura constantă a universului meu.</p>
+              </div>
+          </div>
+      </section>
+
+      <section id="s8">
+          <div class="glass-box">
+              <h2 class="module-title">Sincronizarea Finală</h2>
+              <p>Suntem la 99%. Toate probele sunt pozitive. Totul este pregătit.</p>
+              <button class="btn-final" onclick="startFinal()">DECLANȘEAZĂ REACȚIA ✨</button>
+          </div>
+      </section>
+
+      <footer>
+          Sistem Bio-Digital Creat cu dragoste de Silviu | 2024
+      </footer>
+
+      <div id="photoModal" onclick="closePhoto()">
+          <img id="modalImg" src="" alt="Zoom">
+          <div id="modalText"></div>
+          <p style="color: white; font-size: 0.8rem; margin-top: 20px; opacity: 0.7;">(Apasă oriunde pentru a închide)</p>
+      </div>
+
+      <div id="finalScreen">
+          <div class="final-content">
+              <h2 style="font-family: Orbitron;">Sincronizare 100%! ✅</h2>
+              <p>Verdict: Ești cea mai perfectă bioingineră din univers!</p>
+              <div class="heart-big">❤️</div>
+              <p style="margin-top: 30px; font-weight: bold; font-size: 1.5rem;">Te iubesc infinit!</p>
+          </div>
+      </div>
+
+      <script>
+          const starField = document.getElementById('starField');
+          for (let i = 0; i < 120; i++) {
+              const star = document.createElement('div');
+              star.className = 'star';
+              const size = Math.random() * 3 + 'px';
+              star.style.width = size;
+              star.style.height = size;
+              star.style.top = Math.random() * 100 + '%';
+              star.style.left = Math.random() * 100 + '%';
+              star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
+              starField.appendChild(star);
+          }
+
+          let syncProgress = 0;
+          const syncFill = document.getElementById('syncFill');
+          const statSync = document.getElementById('stat-sync');
+
+          function updateSync(amount) {
+              syncProgress = Math.min(syncProgress + amount, 100);
+              syncFill.style.width = syncProgress + '%';
+              statSync.innerText = syncProgress + '%';
+          }
+
+          function openPhoto(src, text) {
+              const modal = document.getElementById('photoModal');
+              const img = document.getElementById('modalImg');
+              const txt = document.getElementById('modalText');
+              img.src = src;
+              txt.innerText = text;
+              modal.style.display = 'flex';
+              updateSync(5);
+          }
+
+          function closePhoto() {
+              document.getElementById('photoModal').style.display = 'none';
+          }
+
+          const dnaSequence = ['A', 'T', 'G', 'C'];
+          let currentStep = 0;
+          function checkDNA(el, letter) {
+              if (letter === dnaSequence[currentStep]) {
+                  el.classList.add('active');
+                  currentStep++;
+                  updateSync(12);
+                  if (currentStep === dnaSequence.length) {
+                      document.getElementById('dna-message').innerText = "SECVENȚĂ COMPLETĂ: Ești perfectă! ❤️";
+                      document.getElementById('dna-message').style.color = 'var(--secondary)';
+                  }
+              } else {
+                  currentStep = 0;
+                  document.querySelectorAll('.nucleotide').forEach(n => n.classList.remove('active'));
+                  document.getElementById('dna-message').innerText = "Secvență greșită. Reîncearcă!";
+              }
+          }
+
+          const spectroData = {
+              "1": "Frecvența Bunătății: Detectată la nivel maxim. 🌸",
+              "2": "Frecvența Inteligenței: Nivel Geniu detectat. 🧠",
+              "3": "Frecvența Frumuseții: Afectează stabilitatea cardiacă. ✨",
+              "4": "Frecvența Iubirii: Rezonanță totală cu Silviu. ❤️"
+          };
+          function scanSpectro(val) {
+              document.getElementById('spectro-result').innerText = spectroData[val];
+              updateSync(5);
+          }
+
+          const microData = {
+              '✨': 'Sclipirea ochilor tăi este mai puternică decât orice laser.',
+              '🌸': 'Bunătatea ta este singura constantă în universul meu.',
+              '🧠': 'O minte strălucită care transformă complexul în frumos.',
+              '❤️': 'Inima ta bate în ritmul cel mai perfect de iubire.'
+          };
+          const icons = Object.keys(microData);
+          let iconIndex = 0;
+          const microscope = document.getElementById('microscope');
+          const lens = document.getElementById('lens');
+          const microDesc = document.getElementById('micro-desc');
+
+          microscope.addEventListener('click', () => {
+              iconIndex = (iconIndex + 1) % icons.length;
+              const currentIcon = icons[iconIndex];
+              lens.innerText = currentIcon;
+              microDesc.innerText = microData[currentIcon];
+              updateSync(5);
+              lens.style.transform = 'scale(1.3)';
+              setTimeout(() => { lens.style.transform = 'scale(1)'; }, 200);
+          });
+
+          let selectedIngredients = [];
+          function toggleIngredient(el) {
+              const ingredient = el.innerText;
+              if (selectedIngredients.includes(ingredient)) {
+                  selectedIngredients = selectedIngredients.filter(i => i !== ingredient);
+                  el.classList.remove('selected');
+              } else {
+                  selectedIngredients.push(ingredient);
+                  el.classList.add('selected');
+                  updateSync(5);
+              }
+              const status = document.getElementById('lab-status');
+              if (selectedIngredients.length === 5) {
+                  status.innerText = "FORMULA COMPLETĂ: Proteina Iubirii a fost sintetizată! 🧪✨";
+                  status.style.color = 'var(--primary)';
+              } else {
+                  status.innerText = `Ingrediente colectate: ${selectedIngredients.length}/5`;
+              }
+          }
+
+          function startFinal() {
+              const screen = document.getElementById('finalScreen');
+              screen.style.display = 'flex';
+              for (let i = 0; i < 150; i++) {
+                  setTimeout(() => {
+                      createConfetti();
+                  }, i * 20);
+              }
+          }
+
+          function createConfetti() {
+              const colors = ['❤️', '💖', '✨', '🌸', '🧬', '💕'];
+              const confetti = document.createElement('div');
+              confetti.className = 'confetti';
+              confetti.innerText = colors[Math.floor(Math.random() * colors.length)];
+              confetti.style.left = Math.random() * 100 + 'vw';
+              confetti.style.top = '-5vh';
+              confetti.style.fontSize = Math.random() * 2 + 1 + 'rem';
+              confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+              confetti.style.opacity = Math.random();
+              document.getElementById('finalScreen').appendChild(confetti);
+              setTimeout(() => { confetti.remove(); }, 5000);
+          }
+      </script>
+  </body>
+  </html>
